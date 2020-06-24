@@ -1,0 +1,2 @@
+The following pages from the imports/Mandelbrot folder are from Benoit Mandelbrot's "The Misbehavior of Markets, A Fractal View of Financial Turbulence." The passage discusses his "aha!" moment, when he discovered what he should write his doctoral thesis on - the fractal power law that rules the mathematical frequency with which individual words occur in common language.
+http://www.uvm.edu/pdodds/research/papers/others/1953/mandelbrot1953a.pdf
