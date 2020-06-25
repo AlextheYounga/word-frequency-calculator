@@ -23,7 +23,6 @@ def count_frequency(lexicon):
         word = word.translate(str.maketrans('', '', string.punctuation))
         # count = lexicon.count(word)
         count = sum(s.count(word) for s in lexicon)
-        count = 1 if count == 0
         dictionary[word] = count
         
     return dictionary
