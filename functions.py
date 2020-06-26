@@ -3,6 +3,7 @@ import numpy as np
 from os import path
 from pathlib import Path
 from definitions import ROOT_DIR
+from export import writeCSV
 import string
 from collections import Counter
 import statistics
@@ -44,20 +45,21 @@ def count_frequency(lexicon):
     return counts
 
 
-def word_analyzer(lexicon):
+def word_analyzer(lexicon, folder):
     frequency = count_frequency(lexicon)
     syllables = syllable_average(lexicon)
     most_common_word = list(frequency.keys())[0]
 
     print(json.dumps(frequency, indent=1))
-    print("\nAverage Syllables: {}".format(syllables))
+    print("\n{} Average Syllables: {}".format(folder, syllables))
+
+    writeCSV(frequency, syllables, folder)   
 
     return
 
 
-def graph_incidence(lexicon, full_text):
+def graph_incidence(lexicon, full_text, folder):
     # Will graph the occurrance of the most common word throughout the text
-
     frequency = count_frequency(lexicon)
     most_common_word = list(frequency.keys())[0]
 
@@ -69,7 +71,7 @@ def graph_incidence(lexicon, full_text):
 
     # graphing the data
     x = list(data.keys())
-    plt.plot(x, list(data.values()), label='\"{}\" Occurance')  # Plot some data on the (implicit) axes.
+    plt.plot(x, list(data.values()), label='\"{}\" Occurance in {}'.format(most_common_word, folder))  # Plot some data on the (implicit) axes.
     plt.xlabel('x Time')
     plt.ylabel('y Occurance')
     plt.title("Word: \"{}\" Incidence".format(most_common_word))
@@ -84,20 +86,20 @@ def graph_incidence(lexicon, full_text):
 def scan_files(files, folder, imports_folder, action):
     lexicon = []
     full_text = ""
+    folder = folder.name
+    print(folder.name)
     for f in files:
         if (Path(f).suffix == '.txt'):
             with open(path.join(imports_folder, folder, f), 'r') as file:
                 txt = file.read().replace('\n', '')  # converting txt file into string
-                full_text += txt # appending to full_text string
+                full_text += txt  # appending to full_text string
                 lexicon.extend(txt.split())  # converting string into list
 
         else:
             print("Error: Incorrect file type provided")
             break
     if action == "analyze":
-        word_analyzer(lexicon)
+        word_analyzer(lexicon, folder)
     if action == "graph":
-        graph_incidence(lexicon, full_text)
+        graph_incidence(lexicon, full_text, folder)
     return
-
-
