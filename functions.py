@@ -49,9 +49,9 @@ def word_analyzer(lexicon, folder):
     frequency = count_frequency(lexicon)
     syllables = syllable_average(lexicon)
     most_common_word = list(frequency.keys())[0]
-
-    print(json.dumps(frequency, indent=1))
+    
     print("\n{} Average Syllables: {}".format(folder, syllables))
+    print(json.dumps(frequency, indent=1))    
 
     writeCSV(frequency, syllables, folder)   
 
@@ -86,8 +86,6 @@ def graph_incidence(lexicon, full_text, folder):
 def scan_files(files, folder, imports_folder, action):
     lexicon = []
     full_text = ""
-    folder = folder.name
-    print(folder.name)
     for f in files:
         if (Path(f).suffix == '.txt'):
             with open(path.join(imports_folder, folder, f), 'r') as file:
