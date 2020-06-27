@@ -2,13 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from os import path
 from pathlib import Path
-from definitions import ROOT_DIR
 from export import writeCSV
 import string
 from collections import Counter
 import statistics
 import json
-import time
 
 
 def syllable_average(lexicon):
@@ -46,14 +44,15 @@ def count_frequency(lexicon):
 
 
 def word_analyzer(lexicon, folder):
+    # Will analyze average syllables and write results to a csv
     frequency = count_frequency(lexicon)
     syllables = syllable_average(lexicon)
     most_common_word = list(frequency.keys())[0]
-    
-    print("\n{} Average Syllables: {}".format(folder, syllables))
-    print(json.dumps(frequency, indent=1))    
 
-    writeCSV(frequency, syllables, folder)   
+    print("\n{} Average Syllables: {}".format(folder, syllables))
+    print(json.dumps(frequency, indent=1))
+
+    writeCSV(frequency, syllables, folder)  # sending to csv function in exports.py
 
     return
 
@@ -86,6 +85,7 @@ def graph_incidence(lexicon, full_text, folder):
 def scan_files(files, folder, imports_folder, action):
     lexicon = []
     full_text = ""
+
     for f in files:
         if (Path(f).suffix == '.txt'):
             with open(path.join(imports_folder, folder, f), 'r') as file:
@@ -96,6 +96,7 @@ def scan_files(files, folder, imports_folder, action):
         else:
             print("Error: Incorrect file type provided")
             break
+
     if action == "analyze":
         word_analyzer(lexicon, folder)
     if action == "graph":
