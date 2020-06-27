@@ -10,5 +10,5 @@ for folder in folders:
     files = listdir(folder)
     if __name__ == '__main__':
         pool = mp.Pool(mp.cpu_count()) # Init multiprocessing.Pool() using your computer's cpu cores.
-        process = pool.apply_async(scan_files(files, folder, IMPORTS, action="graph")) # adding process to pool
+        process = pool.apply_async(scan_files(files, folder.name, IMPORTS, action="graph")) # adding process to pool
         pool.close() #closing pool
